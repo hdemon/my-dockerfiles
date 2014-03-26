@@ -30,6 +30,7 @@ RUN apt-get install -y \
   libtool \
   bison \
   build-essential \
+  openssh-server \
   mysql-client \
   libmysqlclient-dev \
   libreadline6 \

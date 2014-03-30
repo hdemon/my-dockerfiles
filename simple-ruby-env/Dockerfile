@@ -47,6 +47,8 @@ RUN apt-get install -y \
 RUN useradd -m app
 RUN touch /var/spool/cron/crontabs/app
 RUN chown app:app /var/spool/cron/crontabs/app
+RUN echo "app  ALL=(ALL)  ALL" >> /etc/sudoers.d/app
+RUN chmod 0440 /etc/sudoers.d/app
 
 # install ruby
 RUN su app

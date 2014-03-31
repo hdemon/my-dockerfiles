@@ -44,11 +44,12 @@ RUN apt-get install -y \
   libxslt1-dev
 
 # create app user
-RUN useradd -m app
-RUN touch /var/spool/cron/crontabs/app
-RUN chown app:app /var/spool/cron/crontabs/app
-RUN echo "app ALL=(ALL) ALL" >> /etc/sudoers.d/app
-RUN chmod 0440 /etc/sudoers.d/app
+#RUN useradd -m app
+RUN adduser --disabled-password --gecos "" app \
+  && echo "app ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+  && echo 'app:app' | chpasswd
+#RUN echo "app ALL=(ALL) ALL" >> /etc/sudoers.d/app
+#RUN chmod 0440 /etc/sudoers.d/app
 
 # install ruby
 RUN su app

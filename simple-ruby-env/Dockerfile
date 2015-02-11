@@ -54,10 +54,11 @@ RUN git clone https://github.com/sstephenson/rbenv.git /home/app/.rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git /home/app/.rbenv/plugins/ruby-build
 RUN rbenv init - >/dev/null 2>&1
 
-RUN rbenv install 2.1.1
-RUN rbenv global 2.1.1
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+RUN rbenv install 2.1.2
+RUN rbenv global 2.1.2
+# 'docker exec' does not execute .bash_profile, so write these to .bashrc
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/app/.bashrc
+RUN echo 'eval "$(rbenv init -)"' >> /home/app/.bashrc
 
 RUN chown -R app:app /home/app/.rbenv
 

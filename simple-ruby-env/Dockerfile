@@ -48,8 +48,6 @@ RUN adduser --disabled-password --gecos "" app \
   && echo "app ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
   && echo 'app:ppa' | chpasswd
 
-ADD ./sshd_config /etc/ssh/sshd_config
-
 # install ruby
 RUN su app
 RUN git clone https://github.com/sstephenson/rbenv.git /home/app/.rbenv

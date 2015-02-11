@@ -1,4 +1,4 @@
-FROM ubuntu:13.10
+FROM ubuntu
 
 MAINTAINER Masami Yonehara(zeitdiebe@gmail.com)
 
@@ -44,12 +44,11 @@ RUN apt-get install -y \
   libxslt1-dev
 
 # create app user
-#RUN useradd -m app
 RUN adduser --disabled-password --gecos "" app \
   && echo "app ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-  && echo 'app:app' | chpasswd
-#RUN echo "app ALL=(ALL) ALL" >> /etc/sudoers.d/app
-#RUN chmod 0440 /etc/sudoers.d/app
+  && echo 'app:ppa' | chpasswd
+
+ADD ./sshd_config /etc/ssh/sshd_config
 
 # install ruby
 RUN su app
@@ -59,6 +58,8 @@ RUN rbenv init - >/dev/null 2>&1
 
 RUN rbenv install 2.1.1
 RUN rbenv global 2.1.1
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 
 RUN chown -R app:app /home/app/.rbenv
 
